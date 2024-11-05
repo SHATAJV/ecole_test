@@ -5,12 +5,16 @@ from models.teacher import Teacher
 from models.course import Course
 from models.address import Address
 
+
 def test_teacher_initialization():
-    """Test initializing a Teacher instance with inherited Person attributes."""
+    """Test the initialization of a Teacher instance with inherited attributes from Person.
+
+    This test verifies that a Teacher object is correctly initialized with the given first name,
+    last name, age, hiring date, and that it starts with an empty list of courses taught and no address.
+    """
 
     hiring_date = date(2020, 9, 1)
     teacher = Teacher(first_name="Didier", last_name="Decoin", age=36, hiring_date=hiring_date)
-
 
     assert teacher.first_name == "Didier"
     assert teacher.last_name == "Decoin"
@@ -19,31 +23,53 @@ def test_teacher_initialization():
     assert teacher.courses_teached == []
     assert teacher.address is None
 
+
 def test_teacher_address():
+    """Test the assignment of an address to a Teacher instance.
+
+    This test checks that a Teacher's address can be set and retrieved correctly.
+    It creates an Address object and assigns it to the Teacher, then verifies that the address
+    attribute reflects this assignment.
+    """
 
     teacher = Teacher(first_name="Jane", last_name="Smith", age=35, hiring_date=date(2021, 5, 15))
-
 
     address = Address(street="123 Main St", city="Paris", postal_code=75001)
     teacher.address = address
 
-
     assert teacher.address == address
+
 
 @pytest.mark.parametrize("course_name", ["Mathematics", "History"])
 def test_teacher_add_course(course_name):
-    """Test adding courses to a teacher's list of courses."""
-    teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
-    course = Course(name=course_name)
+    """Test adding courses to a Teacher's list of taught courses.
 
+    This test verifies that a course can be added to a Teacher's courses taught list. It checks that
+    the course's teacher attribute is correctly set to the Teacher instance and that the course
+    appears in the Teacher's courses_teached list.
+
+    Parameters:
+    - course_name (str): The name of the course to be added.
+    """
+
+    teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
+
+    course = Course(name=course_name, start_date=date(2024, 1, 1), end_date=date(2024, 6, 1))
 
     teacher.add_course(course)
 
     assert course.teacher == teacher
-    assert course in teacher.courses_teached  # assuming courses_teached should include the course
+    assert course in teacher.courses_teached
+
 
 def test_teacher_str():
-    """Test string representation of Teacher instance, inherited from Person."""
+    """Test the string representation of a Teacher instance.
+
+    This test verifies that the string representation of a Teacher object accurately reflects its
+    attributes. It checks the output when the Teacher has an address assigned and when no address
+    is assigned, ensuring the format is consistent with expected output.
+    """
+
     teacher = Teacher(first_name="Jane", last_name="Smith", age=35, hiring_date=date(2021, 5, 15))
     address = Address(street="123 Main St", city="Paris", postal_code=75001)
     teacher.address = address
