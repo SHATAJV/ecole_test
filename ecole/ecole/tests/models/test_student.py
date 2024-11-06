@@ -1,11 +1,12 @@
 """
 Unit testing of class Student
 """
+from unittest.mock import Mock
 
 import pytest
-from datetime import date
-from models.course import Course
+
 from models.student import Student
+
 
 @pytest.mark.parametrize("first_name, last_name, age, expected_student_nbr", [
     ("John", "Smith", 10, 1),
@@ -30,21 +31,34 @@ def test_student_initialization(first_name, last_name, age, expected_student_nbr
     assert student.student_nbr == expected_student_nbr
     assert student.courses_taken == []
 
+
 @pytest.mark.parametrize("course_name", ["Math", "Physics", "History"])
 def test_add_course(course_name):
-    """Test adding a course to a Student's list of courses taken.
+    """Test adding a course to a Student's list of courses taken using mocks.
 
-    This test verifies that when a course is added to a Student, it correctly appears in the
-    student's list of courses taken. The test also ensures that the course is associated with
-    the student.
+    This test verifies that when a course is added to a Student, it appears in the
+    student's list of courses taken and the student is added to the course's list
+    of students taking it, using mock objects for isolation.
 
     Parameters:
     - course_name (str): The name of the course to be added to the student's course list.
     """
 
-    student = Student("John", "Smith", 10, 1)
-    course = Course(name=course_name, start_date=date(2024, 1, 1), end_date=date(2024, 6, 1))
-    student.add_course(course)
+    student = Student("John", "Smith", 10)
 
-    assert course in student.courses_taken
-    assert student in course.students_taking_it
+    course_mock = Mock()
+    course_mock.name = course_name
+    course_mock.students_taking_it = []
+
+    student.add_course(course_mock)
+
+    assert course_mock in student.courses_taken
+
+    assert student in course_mock.students_taking_it
+
+
+def test_student_str():
+    """Test the string representation of Student instance."""
+    student = Student("Jane", "Doe", 20)
+    expected_str = f"{student.first_name} {student.last_name} ({student.age} ans), n° étudiant : {student.student_nbr}"
+    assert str(student) == expected_str

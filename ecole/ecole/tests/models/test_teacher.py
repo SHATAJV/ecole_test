@@ -1,4 +1,6 @@
 # test_teacher.py
+from unittest.mock import Mock
+
 import pytest
 from datetime import date
 from models.teacher import Teacher
@@ -78,3 +80,23 @@ def test_teacher_str():
 
     teacher.address = None
     assert str(teacher) == "Jane Smith (35 ans), arrivé(e) le 2021-05-15"
+
+
+def test_teacher_add_course_with_mock():
+    """Test adding a course to a Teacher's list using a mock Course instance.
+
+    This test ensures that when a mock course is added to a Teacher's list of courses taught,
+    the course's teacher attribute is correctly assigned to the Teacher instance and that
+    the course appears in the Teacher's courses_teached list.
+    """
+
+    teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
+
+    course_mock = Mock()
+    course_mock.name = "Mathematics"
+
+    teacher.add_course(course_mock)
+
+    assert course_mock.teacher == teacher
+
+    assert course_mock in teacher.courses_teached
