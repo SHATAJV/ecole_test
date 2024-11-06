@@ -41,9 +41,10 @@ class Course:
             if self.teacher is not None:
                 # un autre enseignant enseignait précédemment ce cours, qui ne doit
                 # donc plus faire partie de la liste des cours qu'il enseigne
-                teacher.courses_teached.remove(self)
+                self.teacher.courses_teached.remove(self)
             # ajout du cours à l'enseignant indiqué
             teacher.courses_teached.append(self)
+            self.teacher = teacher
 
     def add_student(self, student: Student) -> None:
         """Ajoute :
