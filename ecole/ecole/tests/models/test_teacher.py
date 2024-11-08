@@ -1,8 +1,11 @@
 # test_teacher.py
-from unittest.mock import Mock
+
 
 import pytest
 from datetime import date
+
+from pytest_mock import mocker
+
 from models.teacher import Teacher
 from models.course import Course
 from models.address import Address
@@ -42,27 +45,6 @@ def test_teacher_address():
     assert teacher.address == address
 
 
-@pytest.mark.parametrize("course_name", ["Mathematics", "History"])
-def test_teacher_add_course(course_name):
-    """Test adding courses to a Teacher's list of taught courses.
-
-    This test verifies that a course can be added to a Teacher's courses taught list. It checks that
-    the course's teacher attribute is correctly set to the Teacher instance and that the course
-    appears in the Teacher's courses_teached list.
-
-    Parameters:
-    - course_name (str): The name of the course to be added.
-    """
-
-    teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
-
-    course = Course(name=course_name, start_date=date(2024, 1, 1), end_date=date(2024, 6, 1))
-
-    teacher.add_course(course)
-
-    assert course.teacher == teacher
-    assert course in teacher.courses_teached
-
 
 def test_teacher_str():
     """Test the string representation of a Teacher instance.
@@ -82,7 +64,7 @@ def test_teacher_str():
     assert str(teacher) == "Jane Smith (35 ans), arrivé(e) le 2021-05-15"
 
 
-def test_teacher_add_course_with_mock():
+def test_teacher_add_course_with_mock(mocker):
     """Test adding a course to a Teacher's list using a mock Course instance.
 
     This test ensures that when a mock course is added to a Teacher's list of courses taught,
@@ -92,11 +74,13 @@ def test_teacher_add_course_with_mock():
 
     teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
 
-    course_mock = Mock()
+
+    course_mock = mocker.Mock()
     course_mock.name = "Mathematics"
+
 
     teacher.add_course(course_mock)
 
-    assert course_mock.teacher == teacher
 
+    assert course_mock.teacher == teacher
     assert course_mock in teacher.courses_teached

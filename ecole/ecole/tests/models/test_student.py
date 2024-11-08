@@ -1,12 +1,9 @@
 """
 Unit testing of class Student
 """
-from unittest.mock import Mock
-
 import pytest
-
+from datetime import date
 from models.student import Student
-
 
 @pytest.mark.parametrize("first_name, last_name, age, expected_student_nbr", [
     ("John", "Smith", 10, 1),
@@ -33,7 +30,7 @@ def test_student_initialization(first_name, last_name, age, expected_student_nbr
 
 
 @pytest.mark.parametrize("course_name", ["Math", "Physics", "History"])
-def test_add_course(course_name):
+def test_add_course(mocker, course_name):
     """Test adding a course to a Student's list of courses taken using mocks.
 
     This test verifies that when a course is added to a Student, it appears in the
@@ -46,13 +43,16 @@ def test_add_course(course_name):
 
     student = Student("John", "Smith", 10)
 
-    course_mock = Mock()
+    # Use mocker to create a mock Course object
+    course_mock = mocker.Mock()
     course_mock.name = course_name
     course_mock.students_taking_it = []
 
     student.add_course(course_mock)
 
+
     assert course_mock in student.courses_taken
+
 
     assert student in course_mock.students_taking_it
 
