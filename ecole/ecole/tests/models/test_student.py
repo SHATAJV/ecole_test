@@ -1,8 +1,4 @@
-"""
-Unit testing of class Student
-"""
 import pytest
-from datetime import date
 from models.student import Student
 
 
@@ -15,20 +11,16 @@ from models.student import Student
     ],
 )
 def test_student_initialization(first_name, last_name, age, expected_student_nbr):
-
-
     student = Student(first_name, last_name, age)
+
     assert student.student_nbr == expected_student_nbr
     assert student.courses_taken == []
 
 
 @pytest.mark.parametrize("course_name", ["Math", "Physics", "History"])
 def test_add_course(mocker, course_name):
-
-
     student = Student("John", "Smith", 10)
 
-    # Use mocker to create a mock Course object
     course_mock = mocker.Mock()
     course_mock.name = course_name
     course_mock.students_taking_it = []
@@ -40,10 +32,10 @@ def test_add_course(mocker, course_name):
 
 
 def test_student_str():
-
     student = Student("Jane", "Doe", 20)
     expected_str = (
-        f"{student.first_name} {student.last_name} ({student.age} ans), "
-        f"n° étudiant : {student.student_nbr}"
+        f"{student.first_name} {student.last_name} "
+        f"({student.age} ans), n° étudiant : {student.student_nbr}"
     )
+
     assert str(student) == expected_str
