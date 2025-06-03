@@ -18,5 +18,5 @@ class Person(ABC):
     address: Address | None = field(default=None, init=False)
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} ({self.age} ans)" + \
-               (f", {self.address}" if self.address is not None else '')
+        base = f"{self.first_name} {self.last_name} ({self.age} ans)"
+        return f"{base}, {self.address}" if self.address else base
