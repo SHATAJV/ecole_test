@@ -1,25 +1,3 @@
-"""
-Unit testing for the Address class.
-
-This test suite verifies the functionality and data validation of the Address class.
-The Address class is expected to store address information for a person with the following attributes:
-- `street`: a string representing the street name.
-- `city`: a string representing the city name.
-- `postal_code`: an integer representing the postal code.
-
-Test Cases:
-1. `test_address_str`:
-    - Verifies the correct initialization of the Address instance with valid data.
-    - Asserts that the `street`, `city`, and `postal_code` attributes are correctly assigned.
-    - Checks the output of the `__str__` method to ensure it produces the expected formatted address string.
-
-2. `test_address_type_errors`:
-    - Verifies that the Address class raises a `TypeError` when initialized with incorrect data types.
-    - Each field (`street`, `city`, `postal_code`) is tested with an invalid data type to confirm strict type enforcement.
-
-Parametrization:
-- Both test functions use `@pytest.mark.parametrize` to efficiently test multiple sets of inputs.
-"""
 
 from models.address import Address
 import pytest
@@ -34,7 +12,7 @@ import pytest
     ],
 )
 def test_address_str(street, city, postal_code, expected_str):
-    """Test correct initialization and string representation of Address instances."""
+
 
     address = Address(street=street, city=city, postal_code=postal_code)
     assert address.street == street
@@ -52,7 +30,7 @@ def test_address_str(street, city, postal_code, expected_str):
     ],
 )
 def test_address_type_errors(street, city, postal_code):
-    """Test that Address raises TypeError for incorrect data types in attributes."""
+
 
     if not isinstance(street, str) or not isinstance(city, str) or not isinstance(postal_code, int):
         with pytest.raises(TypeError):

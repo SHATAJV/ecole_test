@@ -15,18 +15,7 @@ from models.student import Student
     ],
 )
 def test_student_initialization(first_name, last_name, age, expected_student_nbr):
-    """Test the initialization of a Student instance.
 
-    This test verifies that a Student object is correctly initialized with the given first name,
-    last name, and age, and that the student number matches the expected value. It also checks
-    that the student's list of courses taken is initially empty.
-
-    Parameters:
-    - first_name (str): The first name of the student.
-    - last_name (str): The last name of the student.
-    - age (int): The age of the student.
-    - expected_student_nbr (int): The expected student number to be assigned upon initialization.
-    """
 
     student = Student(first_name, last_name, age)
     assert student.student_nbr == expected_student_nbr
@@ -35,15 +24,7 @@ def test_student_initialization(first_name, last_name, age, expected_student_nbr
 
 @pytest.mark.parametrize("course_name", ["Math", "Physics", "History"])
 def test_add_course(mocker, course_name):
-    """Test adding a course to a Student's list of courses taken using mocks.
 
-    This test verifies that when a course is added to a Student, it appears in the
-    student's list of courses taken and the student is added to the course's list
-    of students taking it, using mock objects for isolation.
-
-    Parameters:
-    - course_name (str): The name of the course to be added to the student's course list.
-    """
 
     student = Student("John", "Smith", 10)
 
@@ -59,7 +40,7 @@ def test_add_course(mocker, course_name):
 
 
 def test_student_str():
-    """Test the string representation of Student instance."""
+
     student = Student("Jane", "Doe", 20)
     expected_str = (
         f"{student.first_name} {student.last_name} ({student.age} ans), "

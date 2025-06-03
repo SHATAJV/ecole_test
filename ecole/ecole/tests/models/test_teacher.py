@@ -8,7 +8,6 @@ from models.address import Address
 
 
 def test_teacher_initialization():
-    """Test the initialization of a Teacher instance with inherited attributes from Person."""
 
     hiring_date = date(2020, 9, 1)
     teacher = Teacher(first_name="Didier", last_name="Decoin", age=36, hiring_date=hiring_date)
@@ -22,7 +21,7 @@ def test_teacher_initialization():
 
 
 def test_teacher_address():
-    """Test the assignment of an address to a Teacher instance."""
+
 
     teacher = Teacher(first_name="Jane", last_name="Smith", age=35, hiring_date=date(2021, 5, 15))
 
@@ -31,9 +30,8 @@ def test_teacher_address():
 
     assert teacher.address == address
 
-
 def test_teacher_str():
-    """Test the string representation of a Teacher instance."""
+
 
     teacher = Teacher(first_name="Jane", last_name="Smith", age=35, hiring_date=date(2021, 5, 15))
     address = Address(street="123 Main St", city="Paris", postal_code=75001)
@@ -46,8 +44,6 @@ def test_teacher_str():
 
 
 def test_teacher_add_course_with_mock(mocker):
-    """Test adding a course to a Teacher's list using a mock Course instance."""
-
     teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
 
     course_mock = mocker.Mock()
