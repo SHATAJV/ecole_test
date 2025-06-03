@@ -74,13 +74,21 @@ def test_teacher_add_course_with_mock(mocker):
 
     teacher = Teacher(first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20))
 
-
     course_mock = mocker.Mock()
     course_mock.name = "Mathematics"
 
-
     teacher.add_course(course_mock)
-
 
     assert course_mock.teacher == teacher
     assert course_mock in teacher.courses_teached
+
+def test_add_course():
+    teacher = Teacher("Marc", "Durand", 40, date(2022, 1, 1))
+    course = Course("Histoire")
+
+    teacher.add_course(course)
+
+    assert course in teacher.courses_teached
+
+
+
