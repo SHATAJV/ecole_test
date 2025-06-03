@@ -58,7 +58,11 @@ def test_teacher_add_course_with_mock(mocker):
 
 def test_add_course():
     teacher = Teacher("Marc", "Durand", 40, date(2022, 1, 1))
-    course = Course("Histoire")
+    course = Course(
+        "Histoire",
+        start_date=date(2024, 1, 1),
+        end_date=date(2024, 6, 1)
+    )
 
     teacher.add_course(course)
 
