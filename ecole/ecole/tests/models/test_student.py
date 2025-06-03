@@ -22,5 +22,3 @@ def test_student_initialization(
     assert student.last_name == last_name
     assert student.age == age
     assert student.student_nbr == expected_student_nbr
-
-
