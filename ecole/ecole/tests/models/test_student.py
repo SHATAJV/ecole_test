@@ -53,7 +53,6 @@ def test_add_course(mocker, course_name):
 
     assert course_mock in student.courses_taken
 
-
     assert student in course_mock.students_taking_it
 
 
