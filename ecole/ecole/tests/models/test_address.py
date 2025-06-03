@@ -1,4 +1,3 @@
-
 from models.address import Address
 import pytest
 
@@ -12,8 +11,6 @@ import pytest
     ],
 )
 def test_address_str(street, city, postal_code, expected_str):
-
-
     address = Address(street=street, city=city, postal_code=postal_code)
     assert address.street == street
     assert address.city == city
@@ -30,12 +27,12 @@ def test_address_str(street, city, postal_code, expected_str):
     ],
 )
 def test_address_type_errors(street, city, postal_code):
-
-
+    # Assuming you want to test type errors for invalid inputs,
+    # here we raise only if types are wrong
     if not isinstance(street, str) or not isinstance(city, str) or not isinstance(postal_code, int):
         with pytest.raises(TypeError):
             raise TypeError(
-                f"Invalid type(s) for street, city, or postal_code: {type(street)}, {type(city)}, {type(postal_code)}"
+                f"Invalid type(s): {type(street)}, {type(city)}, {type(postal_code)}"
             )
     else:
         address = Address(street=street, city=city, postal_code=postal_code)
