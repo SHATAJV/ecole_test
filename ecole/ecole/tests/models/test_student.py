@@ -1,6 +1,7 @@
 import pytest
 from models.student import Student
 
+
 @pytest.mark.parametrize(
     "first_name, last_name, age, expected_student_nbr",
     [
