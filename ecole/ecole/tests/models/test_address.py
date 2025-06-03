@@ -11,7 +11,11 @@ import pytest
     ],
 )
 def test_address_type_errors(street, city, postal_code):
-    if not isinstance(street, str) or not isinstance(city, str) or not isinstance(postal_code, int):
+    if (
+            not isinstance(street, str)
+            or not isinstance(city, str)
+            or not isinstance(postal_code, int)
+    ):
         with pytest.raises(TypeError):
             raise TypeError(
                 f"Invalid type(s): {type(street)}, {type(city)}, "

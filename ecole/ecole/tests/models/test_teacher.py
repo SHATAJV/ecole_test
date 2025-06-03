@@ -3,6 +3,7 @@ from models.teacher import Teacher
 from models.course import Course
 from models.address import Address
 
+
 def test_teacher_address():
     teacher = Teacher(
         first_name="Jane",
@@ -37,9 +38,13 @@ def test_teacher_str():
     expected_str_no_address = "Jane Smith (35 ans), arrivé(e) le 2021-05-15"
     assert str(teacher) == expected_str_no_address
 
+
 def test_teacher_add_course_with_mock(mocker):
     teacher = Teacher(
-        first_name="Alice", last_name="Brown", age=45, hiring_date=date(2019, 8, 20)
+        first_name="Alice",
+        last_name="Brown",
+        age=45,
+        hiring_date=date(2019, 8, 20)
     )
 
     course_mock = mocker.Mock()
