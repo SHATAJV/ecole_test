@@ -4,12 +4,16 @@
 Classe Course
 """
 
+# pour simplifier les annotations de types des classes non importées à l'exécution
+# (teacher: Teacher plutôt que teacher: 'Teacher')
 from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING
 from dataclasses import dataclass, field
 from datetime import date
 
+# pour éviter une circularité des imports à l'exécution,
+# les classes Student et Teacher important la classe Course
 if TYPE_CHECKING:
     from .student import Student
     from .teacher import Teacher
@@ -31,18 +35,28 @@ class Course:
     students_taking_it: list[Student] = field(default_factory=list, init=False)
 
     def set_teacher(self, teacher: Teacher) -> None:
-        """Affecte un enseignant au cours, en gérant les éventuels remplacements."""
+        """Indique quel est l'enseignant de ce cours."""
         if teacher != self.teacher:
+            # il y a quelque chose à faire
             if self.teacher is not None:
+                # un autre enseignant enseignait précédemment ce cours, qui ne doit
+                # donc plus faire partie de la liste des cours qu'il enseigne
                 self.teacher.courses_teached.remove(self)
+            # ajout du cours à l'enseignant indiqué
             teacher.courses_teached.append(self)
             self.teacher = teacher
 
     def add_student(self, student: Student) -> None:
-        """Ajoute l'étudiant au cours, et le cours à l'étudiant."""
+        """Ajoute :
+        - l'étudiant student à la liste des étudiants suivant ce cours
+        - ce cours à la liste des cours que suit cet étudiant"""
         self.students_taking_it.append(student)
         student.courses_taken.append(self)
 
     def __str__(self) -> str:
-        base = f"{self.name} ({self.start_date} – {self.end_date})"
-        return f"{base}, enseigné par {self.teacher}" if self.teacher else f"{base}, pas d'enseignant affecté"
+        course_str = f"{self.name} ({self.start_date} – {self.end_date}),\n"
+        if self.teacher is not None:
+            course_str += f"enseigné par {self.teacher}"
+        else:
+            course_str += "pas d'enseignant affecté"
+        return course_str
